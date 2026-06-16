@@ -78,3 +78,19 @@ create index on contracts(user_id);
 create index on contracts(plant_id);
 create index on production_cache(plant_id, date);
 create index on percentage_history(contract_id, changed_at);
+
+-- Disable RLS (backend controls all access via Node.js API + service role key)
+alter table installers disable row level security;
+alter table users disable row level security;
+alter table plants disable row level security;
+alter table contracts disable row level security;
+alter table percentage_history disable row level security;
+alter table production_cache disable row level security;
+
+-- Grants (required for new Supabase key format sb_secret_/sb_publishable_)
+grant all on all tables in schema public to anon;
+grant all on all tables in schema public to authenticated;
+grant all on all tables in schema public to service_role;
+grant all on all sequences in schema public to anon;
+grant all on all sequences in schema public to authenticated;
+grant all on all sequences in schema public to service_role;
