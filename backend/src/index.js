@@ -14,6 +14,7 @@ import savingsRoutes from './routes/savings.js'
 import plantRoutes from './routes/plant.js'
 import reportsRoutes from './routes/reports.js'
 import adminRoutes from './routes/admin/index.js'
+import { startProductionCacheJob } from './jobs/production-cache.js'
 
 const fastify = Fastify({ logger: true })
 
@@ -34,3 +35,5 @@ fastify.register(adminRoutes, { prefix: '/admin' })
 
 const port = Number(process.env.PORT) || 3000
 await fastify.listen({ port, host: '0.0.0.0' })
+
+startProductionCacheJob()
